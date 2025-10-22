@@ -2,17 +2,17 @@ class Pins:
 
     def __init__(self):
         # need catcher to suspend program when flags set to high
-        self.FF1_X = 19
-        self.FF2_X = 21
-        self.FF1_Y = 15
-        self.FF2_Y = 13
-        self.FF1_Z = 8
-        self.FF2_Z = 10
+        self.FF1_X = 21
+        self.FF2_X = 20
+        self.FF1_Y = 25
+        self.FF2_Y = 24
+        self.FF1_Z = 27
+        self.FF2_Z = 18
 
         # direction when set high will flow from OUTA -> OUTB
-        self.DIR_X = 22
-        self.DIR_Y = 18
-        self.DIR_Z = 12
+        self.DIR_X = 19
+        self.DIR_Y = 23
+        self.DIR_Z = 17
 
         # pwm outputs
         self.Current_Out_X = 29
@@ -20,9 +20,9 @@ class Pins:
         self.Current_Out_Z = 24
 
         # reset
-        self.resetX = 23
-        self.resetY = 16
-        self.resetZ = 7
+        self.resetX = 16
+        self.resetY = 22
+        self.resetZ = 4
 
         # magnetometer
         self.CS = 11
