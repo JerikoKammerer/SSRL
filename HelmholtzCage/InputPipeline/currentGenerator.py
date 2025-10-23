@@ -19,8 +19,10 @@ class Coil:
         Io = []
         for i in self.Bin:
             B = self.Bin[p]
-            num = B*math.pi*self.a*(1+(self.gamma**2))*((2+(self.gamma**2))**.5)
-            den = mu*4*self.N
+            #num = B*math.pi*self.a*(1+(self.gamma**2))*((2+(self.gamma**2))**.5)
+            #den = mu*4*self.N
+            num = 4*mu*B*self.N
+            den = math.pi*self.a*(1+(self.gamma**2))*((2+(self.gamma**2))**.5)
             I = num/den
             Io.append(I)
             p +=1
