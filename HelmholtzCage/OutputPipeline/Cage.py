@@ -132,7 +132,7 @@ class Cage:
             while j < self.test_length:
                 #try:
                 #print('try')
-                self.magnet.read()
+                #self.magnet.read() # Commented out to ignore mag readings
                 #print('try2')
                 bx_change = bx - self.magnet.Mx  # Theoretical - read value
                 by_change = by - self.magnet.My
