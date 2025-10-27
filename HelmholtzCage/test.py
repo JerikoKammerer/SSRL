@@ -37,7 +37,7 @@ let's see what happens when we uncomment #X.display() and #Y.display() and #Z.di
 (this makes the test stop and it gets stuck)
 '''
 
-X = cg.Coil('X-axis', mag.Bx, 30, 1, .5445)
+X = cg.Coil('X-axis', mag.Bx, 30, 1, .5)
 X.get_current()
 #X.display()
 
@@ -45,7 +45,7 @@ Y = cg.Coil('Y-axis', mag.By, 30, 1, .5445)
 Y.get_current()
 #Y.display()
 
-Z = cg.Coil('Z-axis', mag.Bz, 30, 1, .5445)
+Z = cg.Coil('Z-axis', mag.Bz, 30, 1, .5)
 Z.get_current()
 #Z.display()
 

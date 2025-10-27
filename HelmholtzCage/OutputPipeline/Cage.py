@@ -41,9 +41,9 @@ class Cage:
         i = 0
         while i < 4:
             try:
-                self.magnet.read()
+                self.magnet.read() # Commented out to ignore mag readings
                 print('Initial Reading:')
-                self.magnet.display('G')
+                self.magnet.display('G') # Commented out to ignore mag readings
                 if i == 0:
                     # why is this subtracting initially?
                     bx_init = 0 - self.magnet.Mx
