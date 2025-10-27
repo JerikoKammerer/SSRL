@@ -57,7 +57,8 @@ class DutyCycle:
             self.dir_y.append(0)
         else:
             self.dir_y.append(1)
-        self.yDutyCycle = int((abs(self.By)-1.38e-7)/2.55e-9)
+            
+        self.yDutyCycle = int((abs(self.By)-1.38e-7)/2.55e-8)
         #self.yDutyCycle = 0.000144
 
         if self.Bz < 0:

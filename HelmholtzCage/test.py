@@ -52,7 +52,7 @@ Z.get_current()
 cage = Cage.Cage(X.Iout, Y.Iout, Z.Iout,mag.Bx,mag.By, mag.Bz, test_length)
 
 print("Calibrate 1")
-cage.calibrate()
+#cage.calibrate()
 #print("Calibrate 2")
 #print("Starting Simulation for: {}".format('SPOC'))
 cage.control()

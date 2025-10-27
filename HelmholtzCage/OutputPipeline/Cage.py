@@ -20,8 +20,8 @@ class Cage:
         self.Bx = Bx        # magnetic field of X axis
         self.By = By        # magnetic field of Y axis
         self.Bz = Bz        # magnetic field of Z axis
-        self.magnet = mag.Magnetometer()
-        self.magnet.setup()
+        #self.magnet = mag.Magnetometer()
+        #self.magnet.setup()
         self.cal_constx = None
         self.cal_consty = None
         self.cal_constz = None
@@ -127,16 +127,16 @@ class Cage:
             # of ~66,000 that may need to be lower. Trace that number back and find out
             # why that number is so big.
             self.PWM.set_DutyCycles(cycles.xDutyCycle, cycles.yDutyCycle, cycles.zDutyCycle)
-            self.pins.set_directions(cycles.dir_x, cycles.dir_y, cycles.dir_y)
+            self.pins.set_directions(cycles.dir_x, cycles.dir_y, cycles.dir_z)
             j = 0
             while j < self.test_length:
                 #try:
                 #print('try')
                 #self.magnet.read() # Commented out to ignore mag readings
                 #print('try2')
-                bx_change = bx - self.magnet.Mx  # Theoretical - read value
-                by_change = by - self.magnet.My
-                bz_change = bz - self.magnet.Mz
+                #bx_change = bx - self.magnet.Mx  # Theoretical - read value
+                #by_change = by - self.magnet.My
+                #bz_change = bz - self.magnet.Mz
 
 
                 cycles_loop = dc.DutyCycle(bx, by, bz)
@@ -147,7 +147,7 @@ class Cage:
                 if cycles_loop.dir_y == 0:
                     cycles_loop.dir_y = -1
                 if cycles_loop.dir_z == 0:
-                    cycles.loop.dir_z =-1
+                    cycles_loop.dir_z = -1
                 # for some reason these statements here are causing an exception. Figure out
                 # what these statements are trying to accomplish.
                 duty_change_x = cycles_loop.xDutyCycle*cycles_loop.dir_x
@@ -161,12 +161,12 @@ class Cage:
                 This yDutyCycle is out of range for some reason. Commenting out the following 3 lines
                 helps the program finish. But not sure why exactly.
                 '''
-                #cycles.xDutyCycle += cycles_loop.xDutyCycle
-                #cycles.yDutyCycle += cycles_loop.yDutyCycle
-                #cycles.yDutyCycle += cycles_loop.zDutyCycle
+                cycles.xDutyCycle += cycles_loop.xDutyCycle
+                cycles.yDutyCycle += cycles_loop.yDutyCycle
+                cycles.zDutyCycle += cycles_loop.zDutyCycle
                 #print('cycles.yDutyCycle: ' + str(cycles.yDutyCycle))
                 self.PWM.set_DutyCycles(cycles.xDutyCycle, cycles.yDutyCycle, cycles.zDutyCycle)
-                self.pins.set_directions(cycles.dir_x, cycles.dir_y, cycles.dir_y)
+                self.pins.set_directions(cycles.dir_x, cycles.dir_y, cycles.dir_z)
                 #print('try6')
                 #except:
                     #print("Read Failed")
