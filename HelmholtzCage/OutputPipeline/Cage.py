@@ -72,11 +72,11 @@ class Cage:
                 if cycles_cal.dir_y == 0:
                     cycles_cal.dir_y = 1
                 else:
-                    cycles_cal.dir_x = 0
+                    cycles_cal.dir_y = 0
                 if cycles_cal.dir_z == 0:
                     cycles_cal.dir_z = 1
                 else:
-                    cycles_cal.dir_x = 0
+                    cycles_cal.dir_z = 0
                 self.PWM.set_DutyCycles(cycles_cal.xDutyCycle, cycles_cal.yDutyCycle, cycles_cal.zDutyCycle)
                 self.pins.set_directions(cycles_cal.dir_x, cycles_cal.dir_y, cycles_cal.dir_z)
             except:
