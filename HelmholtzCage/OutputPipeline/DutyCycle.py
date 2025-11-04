@@ -51,14 +51,14 @@ class DutyCycle:
         else:
             self.dir_x.append(1)
 
-        self.xDutyCycle = int((abs(self.Bx)-2.48e-7)/2.8e-9)
+        self.xDutyCycle = int((self.Bx/7.5) * 65535)
         #self.zDutyCycle = int(Iz_abs)  # 7.5A/65535 = .000144 mA
         if self.By < 0:
             self.dir_y.append(0)
         else:
             self.dir_y.append(1)
             
-        self.yDutyCycle = int((abs(self.By)-1.38e-7)/2.55e-8)
+        self.yDutyCycle = int((self.By/7.5) * 65535)
         #self.yDutyCycle = 0.000144
 
         if self.Bz < 0:
@@ -66,5 +66,5 @@ class DutyCycle:
         else:
             self.dir_z.append(1)
 
-        self.zDutyCycle = int((abs(self.Bz)-5.79e-7)/2.71e-9)
+        self.zDutyCycle = int((self.Bz/7.5) * 65535)
 

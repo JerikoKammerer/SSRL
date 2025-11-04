@@ -17,9 +17,9 @@ class Magnetometer:
     def read(self):
         "Read one measurement for each axis in [T]"
         self.Mx, self.My, self.Mz = self.SENSOR.magnetic
-        self.Mx = self.Mx*.000001
-        self.My = self.My*.000001
-        self.Mz = self.Mz*.000001
+        self.Mx = self.Mx*.0001
+        self.My = self.My*.0001
+        self.Mz = self.Mz*.0001
         if self.SENSOR.last_status > adafruit_mlx90393.STATUS_OK:
             self.SENSOR.display_status()
         time.sleep(1)

@@ -36,6 +36,7 @@ class Coil:
         den = math.pi*self.a*(1+(self.gamma**2))*((2+(self.gamma**2))**.5)
         I = num/den
         self.Isin = I
+        return self.Isin
 
     def display(self):
         print('Currents for {} ='.format(self.name))
