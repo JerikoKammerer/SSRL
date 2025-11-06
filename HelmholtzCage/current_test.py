@@ -37,7 +37,7 @@ PWM = PWM.PWM()
 PWM.connectI2C()
 PWM.set_frequency(1000)
 
-try:
+def manual_test():
     Mag.read()
     Mag.display('G')
     PWM.set_DutyCycles(int(DC.xDutyCycle), int(DC.yDutyCycle), int(DC.zDutyCycle))
@@ -47,7 +47,20 @@ try:
     Mag.display('G')
     sleep(5)
     PWM.set_DutyCycles(0, 0, 0)
-    pins.set_directions(0, 0, 0)    
+    pins.set_directions(0, 0, 0)
+
+def automatic_test():
+    print("Not implemented yet :(")
+
+try:
+    print("Manual or Automatic Test? (m/a): ")
+    choice = input().lower()
+    if choice == 'm':
+        manual_test()
+    elif choice == 'a':
+        automatic_test()
+    else: 
+        print("Invalid choice. Exiting.")   
 except KeyboardInterrupt:
     PWM.set_DutyCycles(0, 0, 0)
     print("Exiting Program")
