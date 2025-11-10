@@ -1,9 +1,9 @@
-from Sensors import Magnetomerer2 as Magnetomerer
+from Sensors import Magnetometer2 as Magnetometer
 from OutputPipeline import Pinout
 import time
 import os
 
-mag = Magnetomerer.Magnetomerer()
+mag = Magnetometer.Magnetometer()
 mag.setup()
 
 numReads = 5 #Magnometer reads X times
