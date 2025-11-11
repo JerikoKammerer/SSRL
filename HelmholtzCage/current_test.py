@@ -1,53 +1,64 @@
 from InputPipeline import currentGenerator as cg
+from InputPipeline import orbitPropagator as op
 from OutputPipeline import DutyCycle as dc
 from OutputPipeline import PWM
 from Sensors import Magnetometer2 as mag
 from OutputPipeline import Pinout
 from time import sleep
 
+# Initial setup
 Mag = mag.Magnetometer()
 Mag.setup()
-
-pins = Pinout.Pins()
-pins.set_directions(0, 0, 0)
-
-X = cg.Coil('X-axis', 50000, 30, 1, .5)
-X_Cur = X.single_current()
-
-Y = cg.Coil('Y-axis', 50000, 30, 1, .5445)
-Y_Cur = Y.single_current()
-
-Z = cg.Coil('Z-axis', 50000, 30, 1, .5)
-Z_Cur = Z.single_current()
-
-print("Calculated Currents:")
-print("X Current: " + str(X_Cur) + " A")
-print("Y Current: " + str(Y_Cur) + " A")
-print("Z Current: " + str(Z_Cur) + " A")
-
-DC = dc.DutyCycle(X_Cur, Y_Cur, Z_Cur)
-DC.single_calc()
-
-print("Duty Cycles:")
-print("X Duty Cycle: " + str(DC.xDutyCycle))
-print("Y Duty Cycle: " + str(DC.yDutyCycle))
-print("Z Duty Cycle: " + str(DC.zDutyCycle))
 
 PWM = PWM.PWM()
 PWM.connectI2C()
 PWM.set_frequency(1000)
 
+pins = Pinout.Pins()
+pins.set_directions(0, 0, 0)
+
+# Propagate Orbits
+
+
+# Calculates currents for each axis based on desired magnetic field strenghts
+def calculateCurrents(bX, bY, bZ):
+    X = cg.Coil('X-axis', 50000, 30, 1, bX)
+    X_Cur = X.single_current()
+
+    Y = cg.Coil('Y-axis', 50000, 30, 1, bY)
+    Y_Cur = Y.single_current()
+
+    Z = cg.Coil('Z-axis', 50000, 30, 1, bZ)
+    Z_Cur = Z.single_current()
+
+    print("Calculated Currents:")
+    print("X Current: " + str(X_Cur) + " A")
+    print("Y Current: " + str(Y_Cur) + " A")
+    print("Z Current: " + str(Z_Cur) + " A")
+
+# Sets duty cycles based on calculated currents
+def setDutyCycle(xCur, yCur, zCur):
+    DC = dc.DutyCycle(xCur, yCur, zCur)
+    DC.single_calc()
+
+    print("Duty Cycles:")
+    print("X Duty Cycle: " + str(DC.xDutyCycle))
+    print("Y Duty Cycle: " + str(DC.yDutyCycle))
+    print("Z Duty Cycle: " + str(DC.zDutyCycle))
+
+    print("Setting PWM duty cycles...")
+    PWM.set_DutyCycles(DC.xDutyCycle, DC.yDutyCycle, DC.zDutyCycle)
+
 def manual_test():
-    Mag.read()
-    Mag.display('G')
-    PWM.set_DutyCycles(int(DC.xDutyCycle), int(DC.yDutyCycle), int(DC.zDutyCycle))
-    pins.set_directions(DC.dir_x, DC.dir_y, DC.dir_z)
-    sleep(5)
-    Mag.read()
-    Mag.display('G')
-    sleep(5)
-    PWM.set_DutyCycles(0, 0, 0)
-    pins.set_directions(0, 0, 0)
+    print("Enter desired magnetic field strength for X-axis in Tesla (T):")
+    bX = float(input())
+    print("Enter desired magnetic field strength for Y-axis in Tesla (T):")
+    bY = float(input())
+    print("Enter desired magnetic field strength for Z-axis in Tesla (T):")
+    bZ = float(input())
+
+    X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
+    setDutyCycle(X_Cur, Y_Cur, Z_Cur)
 
 def automatic_test():
     print("Not implemented yet :(")
