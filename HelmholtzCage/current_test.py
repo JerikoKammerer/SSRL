@@ -1,3 +1,6 @@
+from tkinter.filedialog import test
+from InputPipeline import orbitPropagator as op
+from InputPipeline import fieldGenerator as fg
 from InputPipeline import currentGenerator as cg
 from InputPipeline import orbitPropagator as op
 from OutputPipeline import DutyCycle as dc
@@ -9,6 +12,14 @@ from time import sleep
 # Initial setup
 Mag = mag.Magnetometer()
 Mag.setup()
+
+# Orbit Propagation
+day = 2
+month = 2
+year = 2023
+test_length = 4
+segments = 4
+
 
 PWM = PWM.PWM()
 PWM.connectI2C()
@@ -35,6 +46,7 @@ def calculateCurrents(bX, bY, bZ):
     print("X Current: " + str(X_Cur) + " A")
     print("Y Current: " + str(Y_Cur) + " A")
     print("Z Current: " + str(Z_Cur) + " A")
+    return X_Cur, Y_Cur, Z_Cur
 
 # Sets duty cycles based on calculated currents
 def setDutyCycle(xCur, yCur, zCur):
@@ -61,8 +73,19 @@ def manual_test():
     setDutyCycle(X_Cur, Y_Cur, Z_Cur)
 
 def automatic_test():
-    print("Not implemented yet :(")
+    test = op.Orbit('ISS', test_length, segments)
+    test.generate()
+    test.display()
 
+    mag = fg.MagneticField(test.positions, day, month, year, test_length, segments)
+    mag.calculate()
+    mag.fix_datatype()
+    mag.display()
+    mag.plot_fields()
+
+    X_cur, Y_cur, Z_cur = calculateCurrents(mag.Bx[0], mag.By[0], mag.Bz[0])
+    setDutyCycle(X_cur, Y_cur, Z_cur)
+    
 try:
     print("Manual or Automatic Test? (m/a): ")
     choice = input().lower()
