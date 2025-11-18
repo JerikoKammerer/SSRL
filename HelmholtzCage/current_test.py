@@ -9,9 +9,10 @@ from Sensors import Magnetometer2 as mag
 from OutputPipeline import Pinout
 from time import sleep
 
-# Initial setup
-#Mag = mag.Magnetometer()
-#Mag.setup()
+# Baseline B values for calibration
+bX_base = 1
+bY_base = 1
+bZ_base = 1
 
 # Orbit Propagation
 day = 2
@@ -33,13 +34,13 @@ pins.set_directions(0, 0, 0)
 
 # Calculates currents for each axis based on desired magnetic field strenghts
 def calculateCurrents(bX, bY, bZ):
-    X = cg.Coil('X-axis', bX, 30, 1, bX)
+    X = cg.Coil('X-axis', (bX + bX_base), 30, 1, 0.5)
     X_Cur = X.single_current()
 
-    Y = cg.Coil('Y-axis', bY, 30, 1, bY)
+    Y = cg.Coil('Y-axis', (bY + bY_base), 30, 1, 0.55)
     Y_Cur = Y.single_current()
-    
-    Z = cg.Coil('Z-axis', bZ, 30, 1, bZ)
+
+    Z = cg.Coil('Z-axis', (bZ + bZ_base), 30, 1, 0.525)
     Z_Cur = Z.single_current()
 
     print("Calculated Currents:")

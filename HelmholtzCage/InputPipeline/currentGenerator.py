@@ -32,10 +32,10 @@ class Coil:
         p = 0
         Io = []
         B = self.Bin
-        #num = B*math.pi*self.a*(1+(self.gamma**2))*((2+(self.gamma**2))**.5)
-        #den = mu*4*self.N
-        num = B*self.a*math.pi*(5**(3/2))
-        den = 8*mu*self.N*(2**(1/2))
+        num = B*math.pi*self.a*(1+(self.gamma**2))*((2+(self.gamma**2))**.5)
+        den = 4*mu*self.N
+        #num = B*self.a*math.pi*(5**(3/2))
+        #den = 8*mu*self.N*(2**(1/2))
         I = num/den
         self.Isin = I
         return self.Isin
