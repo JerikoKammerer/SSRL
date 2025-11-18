@@ -10,8 +10,8 @@ from OutputPipeline import Pinout
 from time import sleep
 
 # Initial setup
-Mag = mag.Magnetometer()
-Mag.setup()
+#Mag = mag.Magnetometer()
+#Mag.setup()
 
 # Orbit Propagation
 day = 2
@@ -33,13 +33,13 @@ pins.set_directions(0, 0, 0)
 
 # Calculates currents for each axis based on desired magnetic field strenghts
 def calculateCurrents(bX, bY, bZ):
-    X = cg.Coil('X-axis', 50000, 30, 1, bX)
+    X = cg.Coil('X-axis', bX, 30, 1, bX)
     X_Cur = X.single_current()
 
-    Y = cg.Coil('Y-axis', 50000, 30, 1, bY)
+    Y = cg.Coil('Y-axis', bY, 30, 1, bY)
     Y_Cur = Y.single_current()
-
-    Z = cg.Coil('Z-axis', 50000, 30, 1, bZ)
+    
+    Z = cg.Coil('Z-axis', bZ, 30, 1, bZ)
     Z_Cur = Z.single_current()
 
     print("Calculated Currents:")
@@ -94,7 +94,9 @@ try:
     elif choice == 'a':
         automatic_test()
     else: 
-        print("Invalid choice. Exiting.")   
+        print("Invalid choice. Exiting.")
+    while True:
+        sleep(1) #wait for keyboard interrupt   
 except KeyboardInterrupt:
     PWM.set_DutyCycles(0, 0, 0)
     print("Exiting Program")
