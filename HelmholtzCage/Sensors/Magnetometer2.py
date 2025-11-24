@@ -17,9 +17,9 @@ class Magnetometer:
     def read(self):
         "Read one measurement for each axis in [T]"
         self.Mx, self.My, self.Mz = self.SENSOR.magnetic
-        self.Mx = self.Mx*.0001
-        self.My = self.My*.0001
-        self.Mz = self.Mz*.0001
+        self.Mx = self.Mx
+        self.My = self.My
+        self.Mz = self.Mz
         if self.SENSOR.last_status > adafruit_mlx90393.STATUS_OK:
             self.SENSOR.display_status()
         time.sleep(1)
@@ -27,18 +27,25 @@ class Magnetometer:
     def display(self, unit):
         "Show last Read values 'T' or 'G'"
         if unit == 'T':
-            print("X: {} T".format(self.Mx))
-            print("Y: {} T".format(self.My))
-            print("Z: {} T".format(self.Mz))
+            self.MxT = self.Mx*0.000001
+            self.MyT = self.My*0.000001
+            self.MzT = self.Mz*0.000001
+            print("X: {} T".format(self.MxT))
+            print("Y: {} T".format(self.MyT))
+            print("Z: {} T".format(self.MzT))
+        elif unit == 'uT':
+            print ("X: {} uT".format(self.Mx))
+            print ("Y: {} uT".format(self.My))
+            print ("Z: {} uT".format(self.Mz))
         elif unit == 'G':
-            self.Mx2 = self.Mx*10000
-            self.My2 = self.My*10000
-            self.Mz2 = self.Mz*10000
+            self.Mx2 = self.Mx*0.01
+            self.My2 = self.My*0.01
+            self.Mz2 = self.Mz*0.01
             print("X: {} G".format(self.Mx2))
             print("Y: {} G".format(self.My2))
             print("Z: {} G".format(self.Mz2))
         else:
-            print("Please select G or T")
+            print("Please select T, uT, or G")
     def status(self):
         "Show the staus of the device"
         self.SENSOR.display_status()

@@ -63,11 +63,11 @@ def setDutyCycle(xCur, yCur, zCur):
     PWM.set_DutyCycles(DC.xDutyCycle, DC.yDutyCycle, DC.zDutyCycle)
 
 def manual_test():
-    print("Enter desired magnetic field strength for X-axis in Gauss (G):")
+    print("Enter desired magnetic field strength for X-axis in Microtesla (uT):")
     bX = float(input())
-    print("Enter desired magnetic field strength for Y-axis in Gauss (G):")
+    print("Enter desired magnetic field strength for Y-axis in Microtesla (uT):")
     bY = float(input())
-    print("Enter desired magnetic field strength for Z-axis in Gauss (G):")
+    print("Enter desired magnetic field strength for Z-axis in Microtesla (uT):")
     bZ = float(input())
 
     X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
