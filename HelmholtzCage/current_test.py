@@ -10,9 +10,9 @@ from OutputPipeline import Pinout
 from time import sleep
 
 # Baseline B values for calibration
-bX_base = 1
-bY_base = 1
-bZ_base = 1
+bX_base = 0.0573
+bY_base = 0.1365
+bZ_base = 0.00242
 
 # Orbit Propagation
 day = 2
@@ -34,13 +34,13 @@ pins.set_directions(0, 0, 0)
 
 # Calculates currents for each axis based on desired magnetic field strenghts
 def calculateCurrents(bX, bY, bZ):
-    X = cg.Coil('X-axis', (bX + bX_base), 30, 1, 0.5) # should it be bX - bX_base?
+    X = cg.Coil('X-axis', (bX - bX_base), 30, 1, 0.5) # should it be bX - bX_base?
     X_Cur = X.single_current()
 
-    Y = cg.Coil('Y-axis', (bY + bY_base), 30, 1, 0.55)
+    Y = cg.Coil('Y-axis', (bY - bY_base), 30, 1, 0.55)
     Y_Cur = Y.single_current()
 
-    Z = cg.Coil('Z-axis', (bZ + bZ_base), 30, 1, 0.525)
+    Z = cg.Coil('Z-axis', (bZ - bZ_base), 30, 1, 0.525)
     Z_Cur = Z.single_current()
 
     print("Calculated Currents:")
@@ -63,11 +63,11 @@ def setDutyCycle(xCur, yCur, zCur):
     PWM.set_DutyCycles(DC.xDutyCycle, DC.yDutyCycle, DC.zDutyCycle)
 
 def manual_test():
-    print("Enter desired magnetic field strength for X-axis in Microtesla (uT):")
+    print("Enter desired magnetic field strength for X-axis in Gauss (G):")
     bX = float(input())
-    print("Enter desired magnetic field strength for Y-axis in Microtesla (uT):")
+    print("Enter desired magnetic field strength for Y-axis in Gauss (G):")
     bY = float(input())
-    print("Enter desired magnetic field strength for Z-axis in Microtesla (uT):")
+    print("Enter desired magnetic field strength for Z-axis in Gauss (G):")
     bZ = float(input())
 
     X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
