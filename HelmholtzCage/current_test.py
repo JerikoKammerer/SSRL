@@ -7,6 +7,7 @@ from OutputPipeline import DutyCycle as dc
 from OutputPipeline import PWM
 from Sensors import Magnetometer2 as mag
 from OutputPipeline import Pinout
+from csvReader import readMagData
 from time import sleep
 
 # Baseline B values for calibration
@@ -73,6 +74,18 @@ def manual_test():
     X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
     setDutyCycle(X_Cur, Y_Cur, Z_Cur)
 
+def csv_test():
+    mag490m1s, mag520m1s, mag490mhalfs, mag520mhalfs = readMagData()
+    print("CSV Data Loaded: running 490 meter 1 second step test...")
+    for entry in mag490m1s:
+        bX = entry[0]
+        bY = entry[1]
+        bZ = entry[2]
+        print("Setting B-field to: X: {}, Y: {}, Z: {}".format(bX, bY, bZ))
+        X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
+        setDutyCycle(X_Cur, Y_Cur, Z_Cur)
+        sleep(1)  # wait for 1 second between steps
+
 def automatic_test():
     test = op.Orbit('ISS', test_length, segments)
     test.generate()
@@ -93,7 +106,7 @@ try:
     if choice == 'm':
         manual_test()
     elif choice == 'a':
-        automatic_test()
+        csv_test()
     else: 
         print("Invalid choice. Exiting.")
     while True:

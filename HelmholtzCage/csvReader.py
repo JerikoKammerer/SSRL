@@ -16,7 +16,7 @@ def filterForXYZ(entry):
 # this is intended to read in the CSV file and populate the lists above
 # it is only tested to work with the specific MagArrayVals.csv file structure
 def readMagData():
-    with open('MagArrayVals.csv', mode='r') as file:
+    with open('/home/pi/HelmholtzCage2/SSRL/HelmholtzCage/MagArrayVals.csv', mode='r') as file:
         csv_reader = csv.reader(file)
         header = next(csv_reader)  # Skip the header row
 
@@ -31,6 +31,24 @@ def readMagData():
                 mag490mhalfs.append(filterForXYZ(row[2]))
             if (len(row) > 3):
                 mag520mhalfs.append(filterForXYZ(row[3]))
+    return mag490m1s, mag520m1s, mag490mhalfs, mag520mhalfs
         
 readMagData()
 print(mag490m1s[0], mag520m1s[0], mag490mhalfs[0], mag520mhalfs[0])
+
+max1 = -1e6
+max2 = -1e6
+max3 = -1e6
+for i in mag490m1s:
+    max1 = max(max1, i[0])
+    max2 = max(max2, i[1])
+    max3 = max(max3, i[2])
+print("Max 490m 1s: ", max1, max2, max3)
+
+max1 = -1e6
+max2 = -1e6
+max3 = -1e6
+for i in mag490mhalfs:
+    max1 = max(max1, i[0])
+    max2 = max(max2, i[1])
+    max3 = max(max3, i[2])
