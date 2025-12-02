@@ -11,8 +11,8 @@ from csvReader import readMagData
 from time import sleep
 
 # Baseline B values for calibration
-bX_base = 0.0573
-bY_base = 0.1365
+bX_base = -0.0573
+bY_base = -0.1365
 bZ_base = 0.00242
 
 # Orbit Propagation
@@ -48,8 +48,14 @@ def calculateCurrents(bX, bY, bZ):
     print("X Current: " + str(X_Cur) + " A")
     print("Y Current: " + str(Y_Cur) + " A")
     print("Z Current: " + str(Z_Cur) + " A")
-    return X_Cur, Y_Cur, Z_Cur
+    
+    # sets coil directions
+    X_Dir = X_Cur > 0
+    Y_Dir = Y_Cur > 0
+    Z_Dir = Z_Cur > 0
+    pins.set_directions(X_Dir, Y_Dir, Z_Dir)
 
+    return abs(X_Cur), abs(Y_Cur), abs(Z_Cur)
 # Sets duty cycles based on calculated currents
 def setDutyCycle(xCur, yCur, zCur):
     DC = dc.DutyCycle(xCur, yCur, zCur)
@@ -77,7 +83,7 @@ def manual_test():
 def csv_test():
     mag490m1s, mag520m1s, mag490mhalfs, mag520mhalfs = readMagData()
     print("CSV Data Loaded: running 490 meter 1 second step test...")
-    for entry in mag490m1s:
+    for entry in mag520m1s:
         bX = entry[0]
         bY = entry[1]
         bZ = entry[2]
