@@ -80,17 +80,50 @@ def manual_test():
     X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
     setDutyCycle(X_Cur, Y_Cur, Z_Cur)
 
-def csv_test():
+def csv_test(data):
     mag490m1s, mag520m1s, mag490mhalfs, mag520mhalfs = readMagData()
-    print("CSV Data Loaded: running 490 meter 1 second step test...")
-    for entry in mag520m1s:
-        bX = entry[0]
-        bY = entry[1]
-        bZ = entry[2]
-        print("Setting B-field to: X: {}, Y: {}, Z: {}".format(bX, bY, bZ))
-        X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
-        setDutyCycle(X_Cur, Y_Cur, Z_Cur)
-        sleep(1)  # wait for 1 second between steps
+    if data == 1:
+        print("CSV Data Loaded: running 490 meter 1 second step test...")
+        for entry in mag520m1s:
+            bX = entry[0]
+            bY = entry[1]
+            bZ = entry[2]
+            print("Setting B-field to: X: {}, Y: {}, Z: {}".format(bX, bY, bZ))
+            X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
+            setDutyCycle(X_Cur, Y_Cur, Z_Cur)
+            sleep(1)  # wait for 1 second between steps
+    elif data == 2:
+        print("CSV Data Loaded: running 520 meter 1 second step test...")
+        for entry in mag520m1s:
+            bX = entry[0]
+            bY = entry[1]
+            bZ = entry[2]
+            print("Setting B-field to: X: {}, Y: {}, Z: {}".format(bX, bY, bZ))
+            X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
+            setDutyCycle(X_Cur, Y_Cur, Z_Cur)
+            sleep(1)  # wait for 1 second between steps
+    elif data == 3:
+        print("CSV Data Loaded: running 490 meter 0.5 second step test...")
+        for entry in mag490mhalfs:
+            bX = entry[0]
+            bY = entry[1]
+            bZ = entry[2]
+            print("Setting B-field to: X: {}, Y: {}, Z: {}".format(bX, bY, bZ))
+            X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
+            setDutyCycle(X_Cur, Y_Cur, Z_Cur)
+            sleep(0.5)  # wait for 0.5 second between steps
+    elif data == 4:
+        print("CSV Data Loaded: running 520 meter 0.5 second step test...")
+        for entry in mag520mhalfs:
+            bX = entry[0]
+            bY = entry[1]
+            bZ = entry[2]
+            print("Setting B-field to: X: {}, Y: {}, Z: {}".format(bX, bY, bZ))
+            X_Cur, Y_Cur, Z_Cur = calculateCurrents(bX, bY, bZ)
+            setDutyCycle(X_Cur, Y_Cur, Z_Cur)
+            sleep(0.5)  # wait for 0.5 second between steps
+    else:
+        print("Invalid data choice. Exiting CSV test.")    
 
 def automatic_test():
     test = op.Orbit('ISS', test_length, segments)
@@ -112,7 +145,9 @@ try:
     if choice == 'm':
         manual_test()
     elif choice == 'a':
-        csv_test()
+        print("Which CSV data to use? (1: 490m 1s steps, 2: 520m 1s steps, 3: 490m 0.5s steps, 4: 520m 0.5s steps): ")
+        data = int(input())
+        csv_test(data)
     else: 
         print("Invalid choice. Exiting.")
     while True:
