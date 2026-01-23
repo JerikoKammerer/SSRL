@@ -36,19 +36,20 @@ def readMagData():
 readMagData()
 print(mag490m1s[0], mag520m1s[0], mag490mhalfs[0], mag520mhalfs[0])
 
-max1 = -1e6
-max2 = -1e6
-max3 = -1e6
-for i in mag490m1s:
-    max1 = max(max1, i[0])
-    max2 = max(max2, i[1])
-    max3 = max(max3, i[2])
-print("Max 490m 1s: ", max1, max2, max3)
+if __name__ == "__main__":
+    max1 = -1e6
+    max3 = -1e6
+    max2 = -1e6
+    for i in mag490m1s:
+        max1 = max(max1, i[0])
+        max2 = max(max2, i[1])
+        max3 = max(max3, i[2])
+    print("Max 490m 1s: ", max1, max2, max3)
 
-max1 = -1e6
-max2 = -1e6
-max3 = -1e6
-for i in mag490mhalfs:
-    max1 = max(max1, i[0])
-    max2 = max(max2, i[1])
-    max3 = max(max3, i[2])
+    max1 = -1e6
+    max2 = -1e6
+    max3 = -1e6
+    for i in mag490mhalfs:
+        max1 = max(max1, i[0])
+        max2 = max(max2, i[1])
+        max3 = max(max3, i[2])
