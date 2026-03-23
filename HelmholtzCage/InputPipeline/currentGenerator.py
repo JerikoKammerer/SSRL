@@ -34,8 +34,10 @@ class Coil:
         B = self.Bin
         #num = B*math.pi*self.a*(1+(self.gamma**2))*((2+(self.gamma**2))**.5)
         #den = 4*mu*self.N*10000
+        #num = B*self.a
+        #den = (0.8144*10**(-6))*self.N*10000
         num = B*self.a
-        den = (0.8144*10**(-6))*self.N*10000
+        den = 1.629*self.N
         I = num/den
         self.Isin = I
         return self.Isin

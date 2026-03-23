@@ -11,9 +11,9 @@ from csvReader import readMagData
 from time import sleep
 
 # Baseline B values for calibration
-bX_base = -0.0573
-bY_base = -0.1365
-bZ_base = 0.00242
+bX_base = 0.091139
+bY_base = -0.108239
+bZ_base = -0.0128744
 
 # Orbit Propagation
 day = 2
@@ -35,13 +35,13 @@ pins.set_directions(0, 0, 0)
 
 # Calculates currents for each axis based on desired magnetic field strenghts
 def calculateCurrents(bX, bY, bZ):
-    X = cg.Coil('X-axis', (bX - bX_base), 30, 1, 0.5) # should it be bX - bX_base?
+    X = cg.Coil('X-axis', (bX - bX_base), 30, 100, 0.5) # should it be bX - bX_base?
     X_Cur = X.single_current()
 
-    Y = cg.Coil('Y-axis', (bY - bY_base), 30, 1, 0.55)
+    Y = cg.Coil('Y-axis', (bY - bY_base), 30, 100, 0.55)
     Y_Cur = Y.single_current()
 
-    Z = cg.Coil('Z-axis', (bZ - bZ_base), 30, 1, 0.525)
+    Z = cg.Coil('Z-axis', (bZ - bZ_base), 30, 100, 0.525)
     Z_Cur = Z.single_current()
 
     print("Calculated Currents:")
