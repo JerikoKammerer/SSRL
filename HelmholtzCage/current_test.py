@@ -35,13 +35,13 @@ pins.set_directions(0, 0, 0)
 
 # Calculates currents for each axis based on desired magnetic field strenghts
 def calculateCurrents(bX, bY, bZ):
-    X = cg.Coil('X-axis', (bX - bX_base), 30, 100, 0.5) # should it be bX - bX_base?
+    X = cg.Coil('X-axis', (bX - bX_base), 30, 1, 0.5) # should it be bX - bX_base?
     X_Cur = X.single_current()
 
-    Y = cg.Coil('Y-axis', (bY - bY_base), 30, 100, 0.55)
+    Y = cg.Coil('Y-axis', (bY - bY_base), 30, 1, 0.55)
     Y_Cur = Y.single_current()
 
-    Z = cg.Coil('Z-axis', (bZ - bZ_base), 30, 100, 0.525)
+    Z = cg.Coil('Z-axis', (bZ - bZ_base), 30, 1, 0.525)
     Z_Cur = Z.single_current()
 
     print("Calculated Currents:")

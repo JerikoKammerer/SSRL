@@ -28,16 +28,12 @@ class Coil:
             p +=1
         self.Iout = Io
     def single_current(self):
-        mu = 4.95*(10**(-5))
+        mu = 4*math.pi*(10**(-7))
         p = 0
         Io = []
         B = self.Bin
-        #num = B*math.pi*self.a*(1+(self.gamma**2))*((2+(self.gamma**2))**.5)
-        #den = 4*mu*self.N*10000
-        #num = B*self.a
-        #den = (0.8144*10**(-6))*self.N*10000
-        num = B*self.a
-        den = 1.629*self.N
+        num = (B* (10**(-4)))*math.pi*self.a*(1+(self.gamma**2))*((2+(self.gamma**2))**.5)
+        den = mu*4*self.N
         I = num/den
         self.Isin = I
         return self.Isin
